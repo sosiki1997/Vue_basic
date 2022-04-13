@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      姓：<input type="text" v-model="firstName" /> <br />
+      名：<input type="text" v-model="lastName" /> <br />
+      <!-- 组件模版应该只包含简单的表达式，复杂的表达式则应该重构为计算属性或方法 -->
+      全名：<span>{{firstName}}-{{lastName}}</span>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    new Vue({
+      el: "#root",
+      data: {
+        firstName: "张",
+        lastName: "三",
+      },
+    });
+  </script>
+</html>

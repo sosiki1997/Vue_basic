@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <school></school>
+    </div>
+  </body>
+
+  <script>
+    Vue.config.productionTip = false;
+
+    Vue.prototype.x = 99;
+
+    const school = Vue.extend({
+      name: "school",
+      template: `
+            <div>
+                <h2>学校名称：{{name}} </h2>
+                <h2>学校地址：{{address}} </h2>
+                <button @click="showX">点我输出x</button>
+             </div>
+        `,
+      data() {
+        return {
+          name: "尚硅谷",
+          address: "北京",
+        };
+      },
+      methods: {
+        showX() {
+          console.log(this.x); // 99
+        },
+      },
+    });
+
+    const vm = new Vue({
+      el: "#root",
+      data: {
+        msg: "你好",
+      },
+      components: { school },
+    });
+
+    console.log(school.prototype.__proto__ === Vue.prototype); // true
+    // #region
+    // // 复习
+    // // 定义一个构造函数
+    // function Demo() {
+    //   this.a = 1;
+    //   this.b = 2;
+    // }
+    // // 创建一个Demo的实例对象
+    // const d = new Demo();
+    // // 显示原型属性、隐式原型属性 都指向原型对象
+    // console.log(Demo.prototype); // 显示原型属性
+    // console.log(d.__proto__); //隐式原型属性
+
+    // console.log(Demo.prototype === d.__proto__); // true
+
+    // // 程序员通过显示原型属性操作原型对象，追加一个x属性 值为99
+    // Demo.prototype.x = 99;
+
+    // // console.log(d.__proto__.x); // 99
+    // console.log(d.x);
+
+    // console.log(d); // Demo {a: 1, b: 2}
+    // #endregion
+  </script>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <style>
+      * {
+        margin-top: 20px;
+      }
+      .demo1 {
+        height: 60px;
+        background-color: skyblue;
+      }
+      .box1 {
+        padding: 5px;
+        background-color: yellow;
+      }
+      .box2 {
+        padding: 5px;
+        background-color: green;
+      }
+      .list {
+        height: 200px;
+        width: 200px;
+        background-color: aqua;
+        overflow: auto;
+      }
+      li {
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root">
+      <h2>欢迎来到{{name}}学习</h2>
+      <!-- 阻止默认事件（常用） -->
+      <a href="https://cn.vuejs.org/" @click.prevent="showInfo">点我立刻出发</a>
+      <!-- 阻止事件冒泡（常用） -->
+      <div class="demo1" @click="showInfo">
+        <button @click.stop="showInfo">点我提示信息</button>
+      </div>
+      <!-- 事件只触发一次（常用） -->
+      <button @click.once="showInfo">点我只提示一次信息</button>
+
+      <!-- 使用事件的捕获模式 -->
+      <!-- 外层div事件在捕获阶段就开始处理，先执行它 -->
+      <div class="box1" @click.capture="showMsg('我是外层div')">
+        我是外层的div
+        <div class="box2" @click="showMsg('我是里层div')">
+          我是里层嵌套的div
+        </div>
+      </div>
+
+      <!-- self：只有event.target是当前操作的元素时 才触发事件 -->
+      <div class="demo1" @click.self="showInfo">
+        <button @click="showInfo">点我提示信息</button>
+      </div>
+
+      <!-- passive：事件的默认行为立即执行，无需等待事件回调执行完毕 -->
+      <!-- scroll：滚动条的滚动 -->
+      <!-- <ul @scroll="demo" class="list"> -->
+      <!-- wheel：鼠标滚动轮的滚动 -->
+      <ul @wheel.passive="demo" class="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+    const vm = new Vue({
+      el: "#root",
+      data: {
+        name: "Vue",
+      },
+      methods: {
+        showInfo(e) {
+          //   e.preventDefault();
+          //   e.stopPropagation();
+          alert("同学你醒啦！");
+          //   console.log(e.target);   //e.target是button
+        },
+        showMsg(msg) {
+          console.log(msg);
+        },
+        demo() {
+          //   console.log("我在滚动");
+          for (let i = 0; i < 100000; i++) {
+            console.log("我继续滚动");
+          }
+          console.log("我滚了十万次");
+        },
+        // 执行顺序：滚动了滚轮，触发了demo事件，demo事件结束后，滚动条才会滚动一下
+      },
+    });
+  </script>
+</html>

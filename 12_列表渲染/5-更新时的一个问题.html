@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <h2>🦧</h2>
+      <button @click="updateMei">更新马冬梅</button>
+      <ul>
+        <li v-for="(p, index) in personArr" :key="p.id">
+          {{p.name}}-{{p.age}}-{{p.sex}}
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    new Vue({
+      el: "#root",
+      data: {
+        personArr: [
+          { id: "001", name: "马冬梅", age: 30, sex: "女" },
+          { id: "002", name: "周冬雨", age: 31, sex: "女" },
+          { id: "003", name: "周杰伦", age: 18, sex: "男" },
+          { id: "004", name: "温兆伦", age: 19, sex: "男" },
+        ],
+      },
+      methods: {
+        updateMei() {
+          this.personArr[0].name = "马老师"; //有效
+          this.personArr[0].age = 50; //有效
+          this.personArr[0].sex = "男"; //有效
+          // this.personArr[0] = { id: "001", name: "马老师", age: 50, sex: "男" };  //无效
+
+          // 学完「Vue监测数据的原理_数组」后的解决方法：
+          this.personArr.splice(0, 1, {
+            id: "001",
+            name: "马老师",
+            age: 50,
+            sex: "男",
+          });
+        },
+      },
+    });
+  </script>
+</html>

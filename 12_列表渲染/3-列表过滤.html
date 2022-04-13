@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <h2>🦧</h2>
+      <!-- 通过v-model双向绑定数据，收集用户的输入 -->
+      <input type="text" placeholder="请输入名字" v-model="keyWord" />
+      <ul>
+        <li v-for="(p, index) in filPersonArr" :key="p.id">
+          {{p.name}}-{{p.age}}-{{p.sex}}
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    // // 用watch实现
+    // #region
+    // new Vue({
+    //   el: "#root",
+    //   data: {
+    //     keyWord: "",
+    //     personArr: [
+    //       { id: "001", name: "马冬梅", age: 19, sex: "女" },
+    //       { id: "002", name: "周冬雨", age: 20, sex: "女" },
+    //       { id: "003", name: "周杰伦", age: 21, sex: "男" },
+    //       { id: "004", name: "温兆伦", age: 22, sex: "男" },
+    //     ],
+    //     filPersonArr: [],
+    //   },
+    //   watch: {
+    //     // 初始页面显示为空，因为此时filPersonArr: []为空
+    //     // keyWord(newValue) {
+    //     //   this.filPersonArr = this.personArr.filter((p) => {
+    //     //     return p.name.indexOf(newValue) !== -1;
+    //     //   });
+    //     // },
+    //     keyWord: {
+    //       // 没有字符改变调用hanler时，已经调用了一次handler，初始页面正常显示
+    //       immediate: true,
+    //       handler(newValue) {
+    //         this.filPersonArr = this.personArr.filter((p) => {
+    //           return p.name.indexOf(newValue) !== -1;
+    //         });
+    //       },
+    //     },
+    //   },
+    // });
+    // #endregion
+
+    //用computed实现
+    new Vue({
+      el: "#root",
+      data: {
+        keyWord: "",
+        personArr: [
+          { id: "001", name: "马冬梅", age: 19, sex: "女" },
+          { id: "002", name: "周冬雨", age: 20, sex: "女" },
+          { id: "003", name: "周杰伦", age: 21, sex: "男" },
+          { id: "004", name: "温兆伦", age: 22, sex: "男" },
+        ],
+      },
+      computed: {
+        filPersonArr() {
+          // 把filter后新数组的值作为filPersonArr的值
+          return this.personArr.filter((p) => {
+            return p.name.indexOf(this.keyWord) !== -1;
+          });
+        },
+      },
+    });
+  </script>
+</html>

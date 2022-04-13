@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <school></school>
+      <hello></hello>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    const school = Vue.extend({
+      name: "school",
+      template: `
+        <div>
+            <h2>学校名称：{{name}} </h2>
+            <h2>学校地址：{{address}} </h2>
+            <button @click="showName">点我提示学校名</button>
+        </div>
+        
+        `,
+      data() {
+        return {
+          name: "尚硅谷",
+          address: "北京",
+        };
+      },
+      methods: {
+        showName() {
+          console.log("showName", this); // VueComponent
+        },
+      },
+    });
+
+    const hello = Vue.extend({
+      template: `<h2>{{msg}}</h2>`,
+      data() {
+        return {
+          msg: "你好啊！",
+        };
+      },
+    });
+
+    // console.log(school);
+    // console.log(hello);
+    // console.log(hello == school);
+
+    const vm = new Vue({
+      el: "#root",
+      components: { school, hello },
+    });
+  </script>
+</html>

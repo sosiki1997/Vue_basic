@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <!-- 遍历数组 -->
+      <h2>🦧</h2>
+      <ul>
+        <!-- 只要用了遍历去生成多个同样结构的数据，必须给每一个结构起个名字（打个标识） -->
+        <!-- <li v-for="p in personArr" :key="p.id">{{p.name}}-{{p.age}}</li> -->
+        <li v-for="(p, index) in personArr" :key="index">
+          {{p.name}}-{{p.age}}
+        </li>
+        <!-- <li v-for="(p, index) of personArr" :key="index">
+          {{p.name}}-{{p.age}}
+        </li> -->
+      </ul>
+
+      <!-- 遍历对象 -->
+      <h2>🚗</h2>
+      <ul>
+        <li v-for="(value, key) in car" :key="key">{{key}}-{{value}}</li>
+      </ul>
+
+      <!-- 遍历字符串 （用的少）-->
+      <h2>👋</h2>
+      <ul>
+        <li v-for="(char, index) in car" :key="index">{{char}}-{{index}}</li>
+      </ul>
+
+      <!-- 遍历指定次数 （用的少 -->
+      <h2>🔢</h2>
+      <ul>
+        <li v-for="(number, index) in 5" :key="index">{{number}}-{{index}}</li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+      el: "#root",
+      data: {
+        personArr: [
+          { id: "001", name: "张三", age: 18 },
+          { id: "002", name: "李四", age: 19 },
+          { id: "003", name: "王五", age: 20 },
+        ],
+        car: {
+          name: "mini",
+          price: "20",
+          color: "green",
+        },
+        str: "hello",
+      },
+    });
+  </script>
+</html>

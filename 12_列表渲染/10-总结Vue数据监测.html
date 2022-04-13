@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <h1>学生信息</h1>
+
+      <button @click="student.age++">年龄+1岁</button><br />
+      <button @click="addSex">添加性别属性</button><br />
+      <button @click="student.sex = '未知' ">修改性别</button><br />
+      <button @click="addFriend">在列表首位添加一个朋友</button><br />
+      <button @click="updateFirstFriendName">修改第一个朋友的名字为张三</button
+      ><br />
+      <button @click="addHobby">添加一个爱好</button><br />
+      <button @click="updateHobby">修改其它爱好</button><br />
+      <button @click="removeMahjong">过滤掉爱好中的打麻将</button><br />
+
+      <h2>学生姓名：{{student.name}}</h2>
+      <h2>学生年龄：{{student.age}}</h2>
+      <h2 v-if="student.sex">学生性别：{{student.sex}}</h2>
+      <h2>爱好😍</h2>
+      <ul>
+        <li v-for="(h,index) in student.hobby" :key="index">{{h}}</li>
+      </ul>
+      <h2>朋友们👬</h2>
+      <ul>
+        <li v-for="(f,index) in student.friends" :key="index">
+          {{f.name}}--{{f.age}}
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+      el: "#root",
+      data: {
+        student: {
+          name: "Tom",
+          age: 18,
+          hobby: ["唱歌", "跳舞", "打麻将"],
+          friends: [
+            { name: "Jerry", age: 35 },
+            { name: "Tony", age: 36 },
+          ],
+        },
+      },
+      methods: {
+        addSex() {
+          Vue.set(this.student, "sex", "男");
+        },
+        addFriend() {
+          // 数组里面添加的对象属性也有 getter 和 setter
+          this.student.friends.unshift({ name: "Jack", age: 17 });
+        },
+        updateFirstFriendName() {
+          // 直接找到数组里的某个元素进行赋值修改 this.student.friends[0]，Vue是不认的
+          this.student.friends[0].name = "张三";
+          this.student.friends[0].age = 15;
+        },
+        addHobby() {
+          this.student.hobby.push("🎮");
+        },
+        updateHobby() {
+          this.student.hobby.splice(0, 1, "🚗");
+          Vue.set(this.student.hobby, 1, "💃");
+          this.$set(this.student.hobby, 2, "🀄️");
+        },
+        removeMahjong() {
+          // filter 不引起原数组的改变
+          this.student.hobby = this.student.hobby.filter((h) => {
+            return h !== "打麻将";
+          });
+        },
+      },
+    });
+  </script>
+</html>

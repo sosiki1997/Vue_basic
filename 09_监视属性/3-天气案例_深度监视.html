@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <h2>今天天气很{{info}}</h2>
+      <button @click="change">切换天气</button>
+      <hr />
+      <h3>a的值是:{{numbers.a}}</h3>
+      <button @click="numbers.a++">点我让a增加1</button>
+      <h3>b的值是:{{numbers.b}}</h3>
+      <button @click="numbers.b++">点我让b增加1</button>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+      el: "#root",
+      data: {
+        isHot: true,
+        numbers: {
+          a: 1,
+          b: 1,
+        },
+      },
+      computed: {
+        info() {
+          return this.isHot ? "Hot" : "Cool";
+        },
+      },
+      methods: {
+        change() {
+          this.isHot = !this.isHot;
+        },
+      },
+      watch: {
+        isHot: {
+          // immediate: true,
+          handler(newValue, oldValue) {},
+        },
+        // 监视多级结构中某个属性的变化
+        // 因为key里面有. 所有要用原始的写法才行
+        "numbers.a": {
+          handler() {
+            console.log("a被改变了");
+          },
+        },
+
+        // 监视多级结构中所有属性的变化
+        numbers: {
+          deep: true,
+          handler() {
+            console.log("number被改变了");
+          },
+        },
+      },
+    });
+  </script>
+</html>

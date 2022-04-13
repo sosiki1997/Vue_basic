@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <h2>今天天气很{{info}}</h2>
+      <button @click="change">切换天气</button>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+      el: "#root",
+      data: {
+        // 监测isHot的改变
+        isHot: true,
+      },
+      computed: {
+        info() {
+          return this.isHot ? "Hot" : "Cool";
+        },
+      },
+      methods: {
+        change() {
+          this.isHot = !this.isHot;
+        },
+      },
+      // 监视方法1
+      // watch: {
+      //   isHot: {
+      //     // immediate 初始化时让handler调用一下
+      //     immediate: true, //默认值是false
+      //     // handler什么时候调用？当isHot发生改变时
+      //     handler(newValue, oldValue) {},
+      //   },
+      // },
+    });
+    // 监视方法2
+    vm.$watch("isHot", {
+      immediate: true,
+      handler(newValue, oldValue) {},
+    });
+  </script>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <h2>姓名：{{name}}</h2>
+      <h2>地址：{{address}}</h2>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+      el: "#root",
+      data: {
+        name: "小李",
+        address: "成都",
+      },
+    });
+    // 如果有人读取name时，getter工作：把data.name给过去
+    // 如果有人通过vm改name，setter执行：把data.name改掉
+  </script>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <h2>当前的n值是：<span v-text="n"></span></h2>
+      <h2>放大10倍后的n值是：<span v-big="n"></span></h2>
+      <button @click="n++">点我n+1</button>
+
+      <hr />
+      <input type="text" v-fbind:value="n" />
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+    // 定义全局指令
+    Vue.directive("fbind", {
+      bind(element, binding) {
+        element.value = binding.value;
+      },
+      inserted(element, binding) {
+        element.focus();
+      },
+      update(element, binding) {
+        element.value = binding.value;
+      },
+    });
+
+    Vue.directive("big", function (element, binding) {
+      element.innerText = binding.value * 10;
+    });
+
+    new Vue({
+      el: "#root",
+      data: {
+        n: 1,
+      },
+      directives: {
+        // 需求一：定义一个 v-big 指令，和v-text功能类似，但会把绑定的数值放大10倍
+        // big(element, binding) {
+        //   // big函数何时会被调用？
+        //   // 钩子1、指令与元素成功绑定时  钩子3、指令所在的模版被重新解析时
+        //   // 把元素(span) 和指令(v-big) 进行绑定
+        //   element.innerText = binding.value * 10;
+        // },
+        // 需求二：定义一个 v-fbind 指令，和v-bind 功能类似，但可以让其所绑定的input元素默认获取焦点
+        // 指令局部
+        // fbind: {
+        //   // 关键的时间点 Vue帮你调一个关键的函数
+        //   // 钩子1、指令与元素成功绑定时
+        //   bind(element, binding) {
+        //     element.value = binding.value;
+        //   },
+        //   // 钩子2、指令所在元素被插入页面时
+        //   inserted(element, binding) {
+        //     element.focus();
+        //   },
+        //   // 钩子3、指令所在的模版被重新解析时
+        //   update(element, binding) {
+        //     element.value = binding.value;
+        //   },
+        // },
+      },
+    });
+  </script>
+</html>

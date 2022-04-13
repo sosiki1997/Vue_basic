@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <!-- {opacity:opacity} 重名用简写{opacity} -->
+      <h2 :style="{opacity}">欢迎学习Vue</h2>
+    </div>
+  </body>
+
+  <script>
+    Vue.config.productionTip = false;
+
+    new Vue({
+      el: "#root",
+      data: {
+        opacity: 1,
+      },
+      methods: {},
+      //   挂载完毕：Vue完成模版的解析 并把初始的真实的DOM元素放入页面后（第一次把东西放入页面） 调用mounted
+      mounted() {
+        setInterval(() => {
+          this.opacity -= 0.01;
+          if (this.opacity <= 0) this.opacity = 1;
+        }, 16);
+      },
+    });
+
+    // 通过外部的定时器实现（不推荐 const vm = new Vue())
+    // setInterval(() => {
+    //   vm.opacity -= 0.01;
+    //   if (vm.opacity <= 0) vm.opacity = 1;
+    // }, 16);
+  </script>
+</html>

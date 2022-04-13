@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <form @submit.prevent="demo">
+        <label for="demo1">账号：</label>
+        <input type="text" id="demo1" v-model.trim="userInfo.account" /><br />
+        <label for="demo2">密码：</label>
+        <input type="password" id="demo2" v-model="userInfo.password" /><br />
+        <label for="demo3">年龄：</label>
+        <input type="number" id="demo3" v-model.number="userInfo.age" /><br />
+        性别： 🚹<input
+          type="radio"
+          name="sex"
+          v-model="userInfo.sex"
+          value="male"
+        />
+        🚺<input
+          type="radio"
+          name="sex"
+          v-model="userInfo.sex"
+          value="female"
+        />
+        <br />
+        爱好： 🍜
+        <input type="checkbox" v-model="userInfo.hobby" value="eat" /> 🥱<input
+          type="checkbox"
+          v-model="userInfo.hobby"
+          value="sleep"
+        />
+        🎮<input type="checkbox" v-model="userInfo.hobby" value="game" />
+        <br />
+        所属校区：
+        <select v-model="userInfo.city">
+          <option value="">请选择校区</option>
+          <option value="bj">北京</option>
+          <option value="sh">上海</option>
+          <option value="sz">深圳</option>
+          <option value="wh">武汉</option>
+        </select>
+        <br /><br />
+        其它信息：
+        <textarea v-model.lazy="userInfo.other"></textarea>
+        <br /><br />
+        <input type="checkbox" v-model="userInfo.agree" /> 阅读并接受<a href="#"
+          >用户协议</a
+        >
+        <button>提交</button>
+      </form>
+    </div>
+  </body>
+
+  <script>
+    Vue.config.productionTip = false;
+
+    // 表单的所有信息都要接受Vue的管理
+    new Vue({
+      el: "#root",
+      data: {
+        userInfo: {
+          account: "",
+          password: "",
+          age: "",
+          sex: "",
+          hobby: [],
+          city: "",
+          other: "",
+          agree: "",
+        },
+      },
+      methods: {
+        demo() {
+          // 尽可能不要出现直接去访问 _data
+          //   console.log(JSON.stringify(this._data));
+          // 真实开发中利用 ajax 把数据发走
+          console.log(JSON.stringify(this.userInfo));
+        },
+      },
+    });
+  </script>
+</html>

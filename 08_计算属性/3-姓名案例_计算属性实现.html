@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      姓：<input type="text" v-model="firstName" /> <br />
+      名：<input type="text" v-model="lastName" /> <br />
+      <!-- 只要data中的值发生改变，Vue一定会重新解析模版，遇到插值语法里面写方法，这个方法会被调用（多次：变一次调一次） -->
+      <!-- fullName在vm身上 -->
+      全名：<span>{{fullName}}</span>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+      el: "#root",
+      // Vue认为data里所写的就是属性和属性值
+      // 计算属性就是拿着你已经写完的属性，去加工去计算生成一个全新的属性
+      data: {
+        // firstName和lastName是属性，fullName是计算属性
+        firstName: "张",
+        lastName: "三",
+      },
+      computed: {
+        // 把计算的整个过程配置成一个对象
+        fullName: {
+          // 当有人读取fullName时，get就会被调用，且返回值就作为fullName的值
+          get() {
+            // get函数里的this 指向vm
+            // 当读fullName的时候，Vue就会调用get()，并且把get()中的this指向调成了vm
+            return this.firstName + "-" + this.lastName;
+          },
+          // get()什么时候调用？
+          // 1、初次读取fullName时
+          // 2、所依赖的数据发生变化时（有缓存，调用一次get，比methods效率更高。数据改变时需要更新，所以再次调用get）
+          set(value) {
+            const arr = value.split("-");
+            this.firstName = arr[0];
+            this.lastName = arr[1];
+          },
+          // set什么时候调用？当fullName被修改时
+        },
+      },
+    });
+  </script>
+</html>

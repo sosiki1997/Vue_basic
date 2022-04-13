@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初识Vue</title>
+    <!-- 引入Vue 开发版 -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <!-- 引入了Vue后，全局就多了一个Vue构造函数 -->
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <!-- 变化的部分用插值语法{{}} -->
+        <h1>hello, {{name}}</h1>
+    </div>
+    <script type="text/javascript">
+        // 阻止Vue在启动时生成生产提示
+        Vue.config.productionTip = false;
+
+        // 创建Vue实例
+        //传一个参数，配置对象
+        // const x在这里无用，不用接这个实例
+        const x = new Vue({
+            el: '#root',    //el用于指定当前Vue实例为哪个容器服务。值通常为css选择器字符串
+            // el: document.getElementById('root')   了解即可不常用
+
+            // 把容器里变化的东西交给Vue实例保管，数据发生变化后，再把数据拿给容器。维护好数据即可，用到数据的地方自然而然就变了
+            // 把数据写在一个对象里
+            data: {     //data中用于存储数据，数据供el所指定的容器去使用，值我们暂时先写出一个对象
+                name: 'zz123'
+            }
+        });
+    </script>
+</body>
+</html>

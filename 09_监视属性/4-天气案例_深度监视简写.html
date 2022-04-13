@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <h2>今天天气很{{info}}</h2>
+      <button @click="change">切换天气</button>
+    </div>
+  </body>
+  <script>
+    Vue.config.productionTip = false;
+
+    const vm = new Vue({
+      el: "#root",
+      data: {
+        isHot: true,
+      },
+      computed: {
+        info() {
+          return this.isHot ? "Hot" : "Cool";
+        },
+      },
+      methods: {
+        change() {
+          this.isHot = !this.isHot;
+        },
+      },
+      watch: {
+        // 完整写法1
+        isHot: {
+          // 当配置项里只有handler时候，就可以用简写形式
+          handler(newValue, oldValue) {
+            console.log("完整写法1");
+          },
+        },
+        // 简写，这个函数就当handler去用
+        isHot(newValue, oldValue) {
+          console.log("简写1");
+        },
+      },
+    });
+
+    // 完整写法2
+    vm.$watch("isHot", {
+      handler(newValue, oldValue) {
+        console.log("完整写法2");
+      },
+    });
+    // 简写2
+    vm.$watch("isHot", function (newValue, oldValue) {
+      console.log("简写2");
+    });
+  </script>
+</html>
